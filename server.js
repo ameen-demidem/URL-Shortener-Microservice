@@ -64,6 +64,6 @@ function shortenUrl(url) {
 }
 
 function validURL(url) {
-  const url_regex = /^(http[s]?|ftp):\/\/([\w\d\-_]+\.)+\w{2,}($|\/\.*)/;
+  const url_regex = /^(http[s]?|ftp):\/\/([\w\d\-_]+\.)+\w{2,}(:\d+)?($|\/\.*)/;
   return url.toLowerCase().match(url_regex);
 }
