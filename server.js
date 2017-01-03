@@ -44,9 +44,13 @@ app
     })
   )
 
-  .get('*', (req, res) => {
-    res.end('Help will go here');
-  })
+  .get('*', (req, res) => res.end(`
+    <div style='font-family: sans'>
+      <h1>Example creation usage:</h1>
+      <p>http://${req.hostname}/new/https://www.google.com</p>
+      <p>http://${req.hostname}/new/http://foo.com:80</p>
+    </div>`
+  ))
 
   .listen(app.get('port'));
 
