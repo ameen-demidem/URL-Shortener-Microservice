@@ -1,6 +1,3 @@
-// 1. Store into MongoDB
-// 2. Redirect to URL
-// 3. Do it for real
 const app = require('express')();
 const mongo = require('mongodb').MongoClient;
 const dbURL = 'mongodb://localhost:27017/free_code_camp';
