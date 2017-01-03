@@ -8,10 +8,10 @@ const dbURL = 'mongodb://localhost:27017/free_code_camp';
 app
   .set('port', process.env.PORT || 3000)
 
-  .get('/new/:url', (req,res) => mongo.connect(dbURL)
+  .get('/new/*', (req,res) => mongo.connect(dbURL)
     .then(db => db.collection('shortened_urls').insert({
-      url: req.params.url,
-      shortened: shortenUrl(req.params.url)
+      url: req.params[0],
+      shortened: shortenUrl(req.params[0])
     }))
     .then(result => {
       if (result.writeError) return Promise.reject(result.writeError.errmsg);
@@ -33,7 +33,7 @@ app
     .then(document => {
       if (!document) return Promise.reject('Couldn\'t find the requested url!');
       console.log('Successfully fetched url', document.url);
-      res.end(document.url);
+      res.redirect(document.url);
     })
     .catch(err => {
       res.writeHead(500);
