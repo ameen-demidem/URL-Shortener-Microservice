@@ -18,7 +18,8 @@ app
     .then(result => {
       if (result.writeError) return Promise.reject(result.writeError.errmsg);
       res.end(JSON.stringify({
-        url: result.ops[0].url, short_url: result.ops[0].shortened
+        url: result.ops[0].url,
+        short_url: `http://${req.hostname}/${result.ops[0].shortened}`
       }));
     })
     .catch(err => {
