@@ -13,7 +13,7 @@ app
           shortened: shortenUrl(req.params[0])
         });
       else
-        return Promise.reject('invalid url');
+        return Promise.reject('Invalid url');
     })
     .then(result => {
       if (result.writeError) return Promise.reject(result.writeError.errmsg);
@@ -24,7 +24,7 @@ app
     .catch(err => {
       res.writeHead(500);
       console.error('Something went wrong:', err);
-      res.end(err);
+      res.end(JSON.stringify({error: err}));
     })
   )
 
@@ -40,7 +40,7 @@ app
     .catch(err => {
       res.writeHead(500);
       console.error('Something went wrong:', err);
-      res.end(err);
+      res.end(JSON.stringify({error: err}));
     })
   )
 
