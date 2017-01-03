@@ -6,10 +6,15 @@ app
   .set('port', process.env.PORT || 3000)
 
   .get('/new/*', (req,res) => mongo.connect(dbURL)
-    .then(db => db.collection('shortened_urls').insert({
-      url: req.params[0],
-      shortened: shortenUrl(req.params[0])
-    }))
+    .then(db => {
+      if (validURL(req.params[0]))
+        return db.collection('shortened_urls').insert({
+          url: req.params[0],
+          shortened: shortenUrl(req.params[0])
+        });
+      else
+        return Promise.reject('invalid url');
+    })
     .then(result => {
       if (result.writeError) return Promise.reject(result.writeError.errmsg);
       res.end(JSON.stringify({
@@ -39,6 +44,10 @@ app
     })
   )
 
+  .get('*', (req, res) => {
+    res.end('Help will go here');
+  })
+
   .listen(app.get('port'));
 
 console.log('Listening on port', app.get('port'));
@@ -52,4 +61,9 @@ function shortenUrl(url) {
     hash &= hash; // Convert to 32bit integer
   }
   return (hash >>> 0).toString(16);
+}
+
+function validURL(url) {
+  const url_regex = /^(http[s]?|ftp):\/\/([\w\d\-_]+\.)+\w{2,}($|\/\.*)/;
+  return url.toLowerCase().match(url_regex);
 }
