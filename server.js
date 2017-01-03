@@ -30,7 +30,7 @@ app
 
   .get('/:shortURL', (req, res) => mongo.connect(dbURL)
     .then(db => db.collection('shortened_urls').findOne({
-      shortened: req.params.shortURL
+      shortened: req.params.shortURL.toLowerCase()
     }))
     .then(document => {
       if (!document) return Promise.reject('Couldn\'t find the requested url!');
