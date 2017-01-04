@@ -1,6 +1,6 @@
 const app = require('express')();
 const mongo = require('mongodb').MongoClient;
-const dbURL = 'mongodb://localhost:27017/free_code_camp';
+const dbURL = process.env.DB_URI;
 
 app
   .set('port', process.env.PORT || 3000)
